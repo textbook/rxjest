@@ -2,6 +2,14 @@
   "name": "rxjest",
   "version": "0.2.0",
   "description": "Jest matchers for working with RxJS observables",
+  "homepage": "https://github.com/textbook/rxjest#readme",
+  "bugs": {
+    "url": "https://github.com/textbook/rxjest/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/textbook/rxjest.git"
+  },
   "files": [
     "lib/"
   ],
@@ -17,6 +25,7 @@
   },
   "keywords": [],
   "author": "Jonathan Sharpe <mail@jonrshar.pe>",
+  "funding": "https://ko-fi.com/textbook",
   "license": "ISC",
   "engines": {
     "node": ">=14"
