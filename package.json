@@ -10,6 +10,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
+    "lint": "eslint .",
     "test": "jest"
   },
   "keywords": [],
@@ -19,7 +20,11 @@
     "node": ">=14"
   },
   "devDependencies": {
+    "@codeyourfuture/eslint-config-standard": "^3.0.3",
     "@types/jest": "^29.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.24.0",
     "jest": "*",
     "rxjs": "*",
     "ts-jest": "^29.0.2",
