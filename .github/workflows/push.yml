@@ -1,0 +1,39 @@
+name: Node.js CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version: 18
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npm pack
+      - run: mv rxjest-*.tgz package.tgz
+      - uses: actions/upload-artifact@v3
+        with:
+          if-no-files-found: error
+          name: package
+          path: package.tgz
+  deploy:
+    runs-on: ubuntu-22.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: test
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/download-artifact@v3
+        with:
+          name: package
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - run: npm publish package.tgz
