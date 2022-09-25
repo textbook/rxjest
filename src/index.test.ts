@@ -2,6 +2,7 @@ import { from, throwError } from "rxjs";
 
 import { eventually } from "./index";
 
+// eslint-disable-next-line jest/prefer-lowercase-title
 describe("RxJeSt", () => {
 	describe("eventually", () => {
 		it("resolves to false if no value matches", async () => {
