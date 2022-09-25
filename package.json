@@ -9,6 +9,7 @@
   "types": "lib/index.d.ts",
   "type": "commonjs",
   "scripts": {
+    "prebuild": "rimraf lib/",
     "build": "tsc --project tsconfig.build.json",
     "lint": "eslint .",
     "ship": "npm run lint && npm run test && npm run build && echo '🚢 ship it!'",
@@ -28,6 +29,7 @@
     "eslint": "^8.24.0",
     "eslint-plugin-jest": "^27.0.4",
     "jest": "*",
+    "rimraf": "^3.0.2",
     "rxjs": "*",
     "ts-jest": "^29.0.2",
     "ts-node": "^10.9.1",
