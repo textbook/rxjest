@@ -1,8 +1,11 @@
 import { equals, iterableEquality, subsetEquality } from "@jest/expect-utils";
+import chalk from "chalk";
 import * as matcherUtils from "jest-matcher-utils";
 import { from } from "rxjs";
 
 import { toEmit } from "./matchers";
+
+chalk.level = 0;
 
 const context: jest.MatcherUtils = {
 	dontThrow: () => undefined,
@@ -30,10 +33,10 @@ describe("toEmit", () => {
 	it("creates appropriate message for positive case", async () => {
 		const { message } = await toEmit.call(context, from([1, 2, 3]), 4);
 		expect(message().split("\n")).toStrictEqual([
-			"\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEmit\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m",
+			"expect(received).toEmit(expected) // deep equality",
 			"",
-			"Expected value: \u001b[32m4\u001b[39m",
-			"Emitted values: \u001b[31m[1, 2, 3]\u001b[39m",
+			"Expected value: 4",
+			"Emitted values: [1, 2, 3]",
 			"",
 		]);
 	});
@@ -41,9 +44,9 @@ describe("toEmit", () => {
 	it("creates appropriate message for negative case", async () => {
 		const { message } = await toEmit.call({ ...context, isNot: true }, from([1, 2, 3]), 2);
 		expect(message().split("\n")).toStrictEqual([
-			"\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoEmit\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m",
+			"expect(received).not.toEmit(expected) // deep equality",
 			"",
-			"Expected value: not \u001b[32m2\u001b[39m",
+			"Expected value: not 2",
 			"",
 		]);
 	});
