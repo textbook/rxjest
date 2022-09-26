@@ -13,12 +13,14 @@ Add the matchers to Jest by importing this package in a [setup file]:
 // jest.config.js
 module.exports = {
   // ...
-  "setupFilesAfterEnv": ["<rootDir>/setupTests.js"]
+  "setupFilesAfterEnv": [
+    "<rootDir>/setupTests.js"
+  ]
 }
 ```
 ```js
-// setupTest.js
-import "rxjest";
+// setupTests.js
+import "rxjest";  // or require("rxjest");
 ```
 
 You can now use `.toEmit` to check that the supplied observable emits the specified value at some point before
