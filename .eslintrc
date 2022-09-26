@@ -5,6 +5,7 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "ignorePatterns": [
+    "e2e/",
     "lib/"
   ],
   "overrides": [

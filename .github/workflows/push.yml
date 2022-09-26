@@ -32,26 +32,17 @@ jobs:
         jest: [ 27, 28, 29 ]
         rxjs: [ 6, 7 ]
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
       - uses: actions/download-artifact@v3
         with:
           name: package
-      - run: npm init --yes
-      - run: npm install jest@${{ matrix.jest }} rxjs@${{ matrix.rxjs }}
-      - run: npm install package.tgz
-      - run: |
-          cat <<-EOF > demo.test.js
-          require("rxjest");
-          const { from } = require("rxjs");
-
-          it("asserts that a matching value was emitted", async () => {
-            await expect(from(["foo", "bar", "baz"])).toEmit("bar");
-            await expect(from(["foo", "bar", "baz"])).not.toEmit("qux");
-          });
-          EOF
-      - run: npx jest
+      - run: npm run e2e -- local
+        env:
+          JEST_VERSION: ${{ matrix.jest }}
+          RXJS_VERSION: ${{ matrix.rxjs }}
   deploy:
     runs-on: ubuntu-22.04
     if: startsWith(github.ref, 'refs/tags/v')
@@ -71,25 +62,10 @@ jobs:
     runs-on: ubuntu-22.04
     needs: deploy
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: actions/download-artifact@v3
-        with:
-          name: package
-      - run: npm init --yes
-      - run: npm install jest@29 rxjs@7
-      - run: npm install "rxjest@${TAG_REF#refs/tags/v}"
+      - run: npm run e2e -- "${TAG_REF#refs/tags/v}"
         env:
           TAG_REF: ${{ github.ref }}
-      - run: |
-          cat <<-EOF > demo.test.js
-          require("rxjest");
-          const { from } = require("rxjs");
-
-          it("asserts that a matching value was emitted", async () => {
-            await expect(from(["foo", "bar", "baz"])).toEmit("bar");
-            await expect(from(["foo", "bar", "baz"])).not.toEmit("qux");
-          });
-          EOF
-      - run: npx jest
