@@ -103,9 +103,9 @@ This matcher has the following failure cases:
 
 ### Version support
 
-- Jest: tested against v27, v28 and v29 (see `peerDependencies` field in `package.json`)
-- Node: tested against v14, v16 and v18 (see `engines` field in `package.json`)
-- RxJS: tested against v6 and v7 (see `peerDependencies` field in `package.json`)
+- **Jest**: tested against v27, v28 and v29 (see `peerDependencies` field in `package.json`)
+- **Node**: tested against v14, v16 and v18 (see `engines` field in `package.json`)
+- **RxJS**: tested against v6 and v7 (see `peerDependencies` field in `package.json`)
 
 ### Linting
 
