@@ -23,8 +23,13 @@ module.exports = {
 import "rxjest";  // or require("rxjest");
 ```
 
-You can now use `.toEmit` to check that the supplied observable emits the specified value at some point before
-completing:
+### Matchers
+
+Once added, the following matchers will be available:
+
+#### `.toEmit`
+
+`.toEmit` checks that the supplied observable emits the specified value at some point before completing:
 
 ```js
 it("asserts that a matching value was emitted", async () => {
@@ -110,7 +115,7 @@ This matcher has the following failure cases:
 ### Linting
 
 If you're using the Jest plugin for ESLint and have [`jest/valid-expect`][valid-expect] enabled, you can configure it
-to understand that this matcher is asynchronous as follows:
+to understand that the `.toEmit` matcher is asynchronous as follows:
 
 ```json5
 {
@@ -129,6 +134,42 @@ to understand that this matcher is asynchronous as follows:
 }
 ```
 
+## Development
+
+You can [fork and clone] this repository to work on it. Once you've cloned the code locally, install the dependencies
+with `npm ci` then check everything is installed and running correctly with `npm run ship`.
+
+### Scripts
+
+The following convenience scripts are provided for development and can be run with `npm run <script>`:
+
+- `build`: Transpile the source code from `src/` to `lib/`
+- `e2e`: Test the package at an E2E level using `bin/e2e.sh`
+  - The script takes an argument specifying the version to download from NPM and test or `local` to test the current
+    code (e.g. `npm run e2e -- x.y.z`)
+  - When testing the local package, use the `--build` flag to rebuild and repack the package (i.e.
+    `npm run e2e -- local --build`)
+  - The version of Jest installed in the example package can be overridden from the default (v29) using the
+    `JEST_VERSION` environment variable
+  - The version of RxJS installed in the example package can be overridden from the default (v7) using the
+    `RXJS_VERSION` environment variable
+- `lint`: Check the code style with ESLint
+- `ship`: Lint, then run low-level tests, then run high-level tests
+- `test`: Test the source code at a unit and integration level using Jest
+
+### Testing
+
+There are three levels of testing:
+
+- **E2E**: the highest level is provided by actually using RxJeSt in an example package. The tests used here are
+  in `demo.js` (which is copied into the example package and renamed by `bin/e2e.sh`).
+- **Integration**: `index.test.js` uses the matchers in an actual Jest context, but is still importing source code
+  rather than using the transpiled package
+- **Unit**: the lowest level of tests are in `src/matchers/<matcher>.test.ts`. These can check more granular details of
+  e.g. failing test messages by directly invoking the matcher functions with a context equivalent to what Jest provides
+  as `this` (the context can be created with `createContext` from `src/matchers/testUtils.ts`).
+
+[fork and clone]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks
 [jest]: https://jestjs.io/
 [rxjs]: https://rxjs.dev/
 [setup file]: https://jestjs.io/docs/configuration#setupfilesafterenv-array

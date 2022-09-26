@@ -40,15 +40,7 @@ pushd "$TEST_DIR"
 		npm install --save-dev "rxjest@$RXJEST_VERSION"
 	fi
 
-	cat <<-EOF > demo.test.ts
-	import "rxjest";
-	import { from } from "rxjs";
-
-	it("asserts that a matching value was emitted", async () => {
-	  await expect(from(["foo", "bar", "baz"])).toEmit("bar");
-	  await expect(from(["foo", "bar", "baz"])).not.toEmit("qux");
-	});
-	EOF
+	cp "$ROOT_DIR/demo.ts" demo.test.ts
 
 	npm test
 popd

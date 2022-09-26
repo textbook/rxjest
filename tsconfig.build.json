@@ -8,6 +8,7 @@
     ]
   },
   "exclude": [
+    "src/**/testUtils.ts",
     "src/**/*.test.ts"
   ],
   "include": [
