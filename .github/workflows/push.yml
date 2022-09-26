@@ -67,3 +67,29 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - run: npm publish package.tgz
+  smoke:
+    runs-on: ubuntu-22.04
+    needs: deploy
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/download-artifact@v3
+        with:
+          name: package
+      - run: npm init --yes
+      - run: npm install {@types/,ts-,}jest@29 rxjs@7
+      - run: npm install "rxjest@${TAG_REF#refs/tags/v}"
+        env:
+          TAG_REF: ${{ github.ref }}
+      - run: |
+          cat <<-EOF > demo.js
+          require("rxjest");
+          const { from } = require("rxjs");
+
+          it("asserts that a matching value was emitted", async () => {
+            await expect(from(["foo", "bar", "baz"])).toEmit("bar");
+            await expect(from(["foo", "bar", "baz"])).not.toEmit("qux");
+          });
+          EOF
+      - run: npx jest --testMatch '<rootDir>/demo.js'
