@@ -37,15 +37,15 @@
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.24.0",
     "eslint-plugin-jest": "^27.0.4",
-    "jest": "*",
+    "jest": "^29.0.3",
     "rimraf": "^3.0.2",
-    "rxjs": "*",
+    "rxjs": "^7.5.7",
     "ts-jest": "^29.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
   "peerDependencies": {
-    "jest": "^29.0.3",
-    "rxjs": "^7.5.6"
+    "jest": "27 || 28 || 29",
+    "rxjs": "6 || 7"
   }
 }

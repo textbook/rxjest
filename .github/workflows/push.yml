@@ -24,10 +24,38 @@ jobs:
           if-no-files-found: error
           name: package
           path: package.tgz
+  verify:
+    runs-on: ubuntu-22.04
+    needs: test
+    strategy:
+      matrix:
+        jest: [ 27, 28, 29 ]
+        rxjs: [ 6, 7 ]
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/download-artifact@v3
+        with:
+          name: package
+      - run: npm init --yes
+      - run: npm install {@types/,ts-,}jest@${{ matrix.jest }} rxjs@${{ matrix.rxjs }}
+      - run: npm install package.tgz
+      - run: |
+          cat <<-EOF > demo.js
+          require("rxjest");
+          const { from } = require("rxjs");
+
+          it("asserts that a matching value was emitted", async () => {
+            await expect(from(["foo", "bar", "baz"])).toEmit("bar");
+            await expect(from(["foo", "bar", "baz"])).not.toEmit("qux");
+          });
+          EOF
+      - run: npx jest --testMatch '<rootDir>/demo.js'
   deploy:
     runs-on: ubuntu-22.04
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: test
+    needs: verify
     steps:
       - uses: actions/setup-node@v3
         with:
