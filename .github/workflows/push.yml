@@ -30,12 +30,15 @@ jobs:
     strategy:
       matrix:
         jest: [ 27, 28, 29 ]
+        node: [ 14, 16, 18 ]
         rxjs: [ 6, 7 ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ matrix.node }}
+      - if: matrix.node == 14
+        run: npm install --global npm@8
       - uses: actions/download-artifact@v3
         with:
           name: package

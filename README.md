@@ -101,6 +101,12 @@ This matcher has the following failure cases:
           at Object.<anonymous> (src/index.test.ts:5:1)
     ```
 
+### Version support
+
+- Jest: tested against v27, v28 and v29 (see `peerDependencies` field in `package.json`)
+- Node: tested against v14, v16 and v18 (see `engines` field in `package.json`)
+- RxJS: tested against v6 and v7 (see `peerDependencies` field in `package.json`)
+
 ### Linting
 
 If you're using the Jest plugin for ESLint and have [`jest/valid-expect`][valid-expect] enabled, you can configure it
