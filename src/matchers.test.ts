@@ -33,7 +33,7 @@ describe("toEmit", () => {
 	it("creates appropriate message for positive case", async () => {
 		const { message } = await toEmit.call(context, from([1, 2, 3]), 4);
 		expect(message().split("\n")).toStrictEqual([
-			"expect(received).toEmit(expected) // deep equality",
+			"expect(observable$).toEmit(value) // deep equality",
 			"",
 			"Expected value: 4",
 			"Emitted values: [1, 2, 3]",
@@ -44,7 +44,7 @@ describe("toEmit", () => {
 	it("creates appropriate message for negative case", async () => {
 		const { message } = await toEmit.call({ ...context, isNot: true }, from([1, 2, 3]), 2);
 		expect(message().split("\n")).toStrictEqual([
-			"expect(received).not.toEmit(expected) // deep equality",
+			"expect(observable$).not.toEmit(value) // deep equality",
 			"",
 			"Expected value: not 2",
 			"",

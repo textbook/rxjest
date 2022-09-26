@@ -11,7 +11,7 @@ export async function toEmit<T>(
 	const pass = emitted === null;
 
 	return {
-		message: (): string => this.utils.matcherHint("toEmit", undefined, undefined, options)
+		message: (): string => this.utils.matcherHint("toEmit", "observable$", "value", options)
 			+ "\n\n"
 			+ `Expected value: ${pass ? "not " : ""}${this.utils.printExpected(expected)}\n`
 			+ (pass ? "" : `Emitted values: ${this.utils.printReceived(emitted)}\n`),

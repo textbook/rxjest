@@ -37,7 +37,7 @@ This matcher has the following failure cases:
     ```none
       ● extending Jest › failing examples for docs › shows emitted values
     
-        expect(received).toEmit(expected) // deep equality
+        expect(observable$).toEmit(value) // deep equality
     
         Expected value: "qux"
         Emitted values: ["foo", "bar", "baz"]
