@@ -30,8 +30,18 @@ describe("extending Jest", () => {
 		});
 	});
 
-	// eslint-disable-next-line jest/no-disabled-tests,jest/no-test-prefixes
-	xdescribe("failing examples for docs", () => {
+	describe("toError", () => {
+		it("works when observable errors", async () => {
+			await expect(throwError(() => new Error("oh no!"))).toError();
+		});
+
+		it("works when observable does not error", async () => {
+			await expect(from([])).not.toError();
+		});
+	});
+
+	// eslint-disable-next-line jest/no-disabled-tests
+	describe.skip("failing examples for docs", () => {
 		it("shows emitted values", async () => {
 			await expect(from(["foo", "bar", "baz"])).toEmit("qux");
 		});
@@ -42,6 +52,14 @@ describe("extending Jest", () => {
 
 		it("times out", async () => {
 			await expect(new Observable()).toEmit(123);
+		}, 100);
+
+		it("reports unexpected errors", async () => {
+			await expect(throwError(() => new Error("oh no!"))).not.toError();
+		});
+
+		it("reports expected errors not received", async () => {
+			await expect(from([])).toError();
 		});
 	});
 });

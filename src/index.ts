@@ -5,6 +5,7 @@ declare global {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		interface Matchers<R> {
 			toEmit<T>(expected: T): Promise<CustomMatcherResult>;
+			toError(): Promise<CustomMatcherResult>;
 		}
 	}
 }

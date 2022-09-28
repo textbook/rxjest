@@ -89,22 +89,78 @@ This matcher has the following failure cases:
 
     ```none
       ● extending Jest › failing examples for docs › times out
-    
-        thrown: "Exceeded timeout of 5000 ms for a test.
+
+        thrown: "Exceeded timeout of 100 ms for a test.
         Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    
-          41 |              });
-          42 |
-        > 43 |              it("times out", async () => {
+
+          51 |              });
+          52 |
+      >   53 |              it("times out", async () => {
              |              ^
-          44 |                      await expect(new Observable()).toEmit(123);
-          45 |              });
-          46 |      });
-    
-          at src/index.test.ts:43:3
-          at src/index.test.ts:34:2
+          54 |                      await expect(new Observable()).toEmit(123);
+          55 |              }, 100);
+          56 |
+
+          at src/index.test.ts:53:3
+          at src/index.test.ts:44:11
           at Object.<anonymous> (src/index.test.ts:5:1)
     ```
+
+#### `.toError`
+
+`.toError` checks that the supplied observable errors rather than completing:
+
+```js
+it("asserts that the observable errors", async () => {
+    await expect(throwError(() => new Error("oh no!"))).toError();
+});
+```
+
+**Note** that this is an asynchronous matcher that needs to be `await`ed or `return`ed.
+
+This matcher has the following failure cases:
+
+- If the observable completes without an error, that is shown explicitly:
+
+    ```none
+      ● extending Jest › failing examples for docs › reports expected errors not received
+
+        expect(observable$).toError()
+
+        Observable completed without error
+
+          60 |
+          61 |              it("reports expected errors not received", async () => {
+        > 62 |                      await expect(from([])).toError();
+             |                                             ^
+          63 |              });
+          64 |      });
+          65 | });
+
+          at Object.<anonymous> (src/index.test.ts:62:27)
+    ```
+
+- If an unexpected error is thrown, it is shown in the output:
+
+    ```none
+      ● extending Jest › failing examples for docs › reports unexpected errors
+
+        expect(observable$).not.toError()
+
+        Expected value: not [Error: oh no!]
+
+          56 |
+          57 |              it("reports unexpected errors", async () => {
+        > 58 |                      await expect(throwError(() => new Error("oh no!"))).not.toError();
+             |                                                                              ^
+          59 |              });
+          60 |
+          61 |              it("reports expected errors not received", async () => {
+
+          at Object.<anonymous> (src/index.test.ts:58:60)
+    ```
+
+- If the observable does not error within the timeout, the test times out (see example above)
 
 ### Version support
 
@@ -115,7 +171,7 @@ This matcher has the following failure cases:
 ### Linting
 
 If you're using the Jest plugin for ESLint and have [`jest/valid-expect`][valid-expect] enabled, you can configure it
-to understand that the `.toEmit` matcher is asynchronous as follows:
+to understand that the matchers are asynchronous as follows:
 
 ```json5
 {
@@ -126,6 +182,7 @@ to understand that the `.toEmit` matcher is asynchronous as follows:
       "error",
       {
         "asyncMatchers": [
+          "toError",
           "toEmit"
         ]
       }

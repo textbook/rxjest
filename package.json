@@ -20,8 +20,9 @@
     "prebuild": "rimraf lib/",
     "build": "tsc --project tsconfig.build.json",
     "e2e": "./bin/e2e.sh",
+    "e2e:local": "npm run e2e -- local --build",
     "lint": "eslint .",
-    "ship": "npm run lint && npm run test && npm run e2e -- local --build && echo '🚢 ship it!'",
+    "ship": "npm run lint && npm run test && npm run e2e:local && echo '🚢 ship it!'",
     "test": "jest"
   },
   "jest": {
