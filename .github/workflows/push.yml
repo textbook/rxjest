@@ -29,9 +29,28 @@ jobs:
     needs: test
     strategy:
       matrix:
-        jest: [ 27, 28, 29 ]
-        node: [ 14, 16, 18 ]
-        rxjs: [ 6, 7 ]
+        include:
+          - jest: 29
+            node: 18
+            rxjs: 7
+          - jest: 29
+            node: 14
+            rxjs: 7
+          - jest: 29
+            node: 16
+            rxjs: 7
+          - jest: 27
+            node: 18
+            rxjs: 7
+          - jest: 28
+            node: 18
+            rxjs: 7
+          - jest: 29
+            node: 18
+            rxjs: 7
+          - jest: 29
+            node: 18
+            rxjs: 6
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
