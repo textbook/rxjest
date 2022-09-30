@@ -30,15 +30,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - jest: 29
-            node: 18
-            rxjs: 7
-          - jest: 29
-            node: 14
-            rxjs: 7
-          - jest: 29
-            node: 16
-            rxjs: 7
           - jest: 27
             node: 18
             rxjs: 7
@@ -47,6 +38,12 @@ jobs:
             rxjs: 7
           - jest: 29
             node: 18
+            rxjs: 7
+          - jest: 29
+            node: 14
+            rxjs: 7
+          - jest: 29
+            node: 16
             rxjs: 7
           - jest: 29
             node: 18
