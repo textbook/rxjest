@@ -28,6 +28,10 @@ describe("extending Jest", () => {
 			await expect(from([{ hello: "world" }])).toEmit({ hello: "world" });
 			await expect(from([{ hello: "world" }])).not.toEmit({ goodbye: "world" });
 		});
+
+		it("avoids timing out", async () => {
+			await expect(new Observable()).not.toEmit(123, { within: 10 });
+		}, 25);
 	});
 
 	describe("toError", () => {
@@ -52,6 +56,10 @@ describe("extending Jest", () => {
 
 		it("times out", async () => {
 			await expect(new Observable()).toEmit(123);
+		}, 100);
+
+		it("can avoid timing out", async () => {
+			await expect(new Observable()).toEmit(123, { within: 10 });
 		}, 100);
 
 		it("reports unexpected errors", async () => {

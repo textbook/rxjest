@@ -33,11 +33,15 @@ Once added, the following matchers will be available:
 
 ```js
 it("asserts that a matching value was emitted", async () => {
-    await expect(from(["foo", "bar", "baz"])).toEmit("bar");
+    await expect(from(["foo", "bar", "baz"])).toEmit("bar", { within: 25 });
 });
 ```
 
 **Note** that this is an asynchronous matcher that needs to be `await`ed or `return`ed.
+
+This matcher takes an optional second argument, an object containing the following options:
+
+- `within` - the time, in ms, to wait to see if the expected value is (or is not) emitted
 
 This matcher has the following failure cases:
 

@@ -1,4 +1,4 @@
-import { from } from "rxjs";
+import { from, timer } from "rxjs";
 
 import { createContext } from "./testUtils";
 import { toEmit } from ".";
@@ -33,6 +33,18 @@ describe("toEmit", () => {
 			"expect(observable$).not.toEmit(value) // deep equality",
 			"",
 			"Expected value: not 2",
+			"",
+		]);
+	});
+
+	it("supports setting a timeout", async () => {
+		const { message, pass } = await toEmit.call(defaultContext, timer(100), 0, { within: 50 });
+		expect(pass).toBe(false);
+		expect(message().split("\n")).toStrictEqual([
+			'expect(observable$).toEmit(value, {"within":50}) // deep equality',
+			"",
+			"Expected value: 0",
+			"Emitted values: []",
 			"",
 		]);
 	});
