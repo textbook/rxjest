@@ -1,4 +1,4 @@
-import { from, throwError } from "rxjs";
+import { from, Observable, throwError } from "rxjs";
 import { toError } from ".";
 
 import { createContext } from "./testUtils";
@@ -32,6 +32,17 @@ describe("toError", () => {
 			"expect(observable$).not.toError()",
 			"",
 			"Expected value: not [Error: oh no!]",
+			"",
+		]);
+	});
+
+	it("supports setting a timeout", async () => {
+		const { message, pass } = await toError.call(defaultContext, new Observable(), { within: 50 });
+		expect(pass).toBe(false);
+		expect(message().split("\n")).toStrictEqual([
+			'expect(observable$).toError({"within":50})',
+			"",
+			"Observable did not error within 50ms",
 			"",
 		]);
 	});

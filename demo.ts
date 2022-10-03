@@ -1,5 +1,5 @@
 import "rxjest";
-import { from, throwError } from "rxjs";
+import { from, Observable, throwError } from "rxjs";
 
 it("asserts that a matching value was emitted", async () => {
 	const source$ = from(["foo", "bar", "baz"]);
@@ -9,5 +9,5 @@ it("asserts that a matching value was emitted", async () => {
 
 it("asserts that an error was thrown", async () => {
 	await expect(throwError(() => new Error("oh no!"))).toError();
-	await expect(from([])).not.toError();
+	await expect(from(new Observable())).not.toError({ within: 10 });
 });

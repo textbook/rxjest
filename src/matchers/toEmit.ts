@@ -1,6 +1,7 @@
 import type { Observable } from "rxjs";
 
 import type { Config } from "./config";
+import { after } from "./utils";
 
 export async function toEmit<T>(
 	this: jest.MatcherUtils,
@@ -51,5 +52,3 @@ function emittedUnless<T>(
 		? emissions
 		: Promise.race([emissions, after(within, emitted)]);
 }
-
-const after = <T>(ms: number, value: T): Promise<T> => new Promise((resolve) => setTimeout(() => resolve(value), ms));

@@ -42,6 +42,10 @@ describe("extending Jest", () => {
 		it("works when observable does not error", async () => {
 			await expect(from([])).not.toError();
 		});
+
+		it("avoids timing out", async () => {
+			await expect(new Observable()).not.toError({ within: 10 });
+		}, 25);
 	});
 
 	// eslint-disable-next-line jest/no-disabled-tests

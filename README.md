@@ -122,6 +122,10 @@ it("asserts that the observable errors", async () => {
 
 **Note** that this is an asynchronous matcher that needs to be `await`ed or `return`ed.
 
+This matcher takes an optional argument, an object containing the following options:
+
+- `within` - the time, in ms, to wait to see if the observable errors (or does not)
+
 This matcher has the following failure cases:
 
 - If the observable completes without an error, that is shown explicitly:
