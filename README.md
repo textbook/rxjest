@@ -1,6 +1,6 @@
 # RxJeSt
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/textbook/rxjest/Node.js%20CI?logo=github)](https://github.com/textbook/rxjest/actions/workflows/push.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/textbook/rxjest/push.yml?branch=main&logo=github)](https://github.com/textbook/rxjest/actions/workflows/push.yml)
 [![NPM](https://img.shields.io/npm/v/rxjest?color=blue&logo=npm)](https://www.npmjs.com/package/rxjest)
 
 [Jest] matchers for working with [RxJS] observables.
