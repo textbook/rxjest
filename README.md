@@ -170,6 +170,83 @@ This matcher has the following failure cases:
 
 - If the observable does not error within the timeout, the test times out (see example above)
 
+#### `.toErrorWith`
+
+`.toErrorWith` checks that the supplied observable errors with a matching message rather than completing:
+
+```js
+it("asserts that the observable errors", async () => {
+    await expect(throwError(() => new Error("oh no!"))).toErrorWith(/^oh no!$/);
+});
+```
+
+**Note** that this is an asynchronous matcher that needs to be `await`ed or `return`ed.
+This matcher has the following failure cases:
+
+- If the observable completes without an error, that is shown explicitly:
+
+    ```none
+      ● extending Jest › failing examples for docs › reports matching errors not received
+
+        expect(observable$).toErrorWith(expected)
+
+        Expected pattern: /whoops/
+
+        Observable completed without error
+
+          90 |
+          91 |              it("reports matching errors not received", async () => {
+        > 92 |                      await expect(from([])).toErrorWith(/whoops/);
+             |                                             ^
+          93 |              });
+          94 |
+          95 |              it("reports mismatched errors received", async () => {
+
+          at Object.<anonymous> (src/index.test.ts:92:27)
+    ```
+
+  - If an unexpected error is thrown, it is shown in the output:
+
+    ```none
+      ● extending Jest › failing examples for docs › reports mismatched errors received
+
+        expect(observable$).toErrorWith(expected)
+
+        Expected pattern: /whoops/
+        Received message: "oh no!"
+
+          94 |
+          95 |              it("reports mismatched errors received", async () => {
+      >   96 |                      await expect(throwError(() => new Error("oh no!"))).toErrorWith(/whoops/);
+             |                                                                          ^
+          97 |              });
+          98 |
+          99 |              it("reports matched errors unexpectedly received", async () => {
+
+          at Object.<anonymous> (src/index.test.ts:96:56)
+    ```
+
+  - If an unexpected match is received it is shown:
+
+    ```none
+      ● extending Jest › failing examples for docs › reports matched errors unexpectedly received
+
+        expect(observable$).not.toErrorWith(expected)
+
+        Expected pattern: not /oh no/
+        Received message: "oh no!"
+
+           98 |
+           99 |             it("reports matched errors unexpectedly received", async () => {
+        > 100 |                     await expect(throwError(() => new Error("oh no!"))).not.toErrorWith(/oh no/);
+              |                                                                             ^
+          101 |             });
+          102 |     });
+          103 | });
+
+          at Object.<anonymous> (src/index.test.ts:100:60)
+    ```
+
 ### Version support
 
 - **Jest**: tested against v27, v28 and v29 (see `peerDependencies` field in `package.json`)

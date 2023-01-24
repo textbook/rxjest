@@ -48,6 +48,20 @@ describe("extending Jest", () => {
 		}, 25);
 	});
 
+	describe("toErrorWith", () => {
+		it("works when observable errors", async () => {
+			await expect(throwError(() => new Error("oh no!"))).toErrorWith(/^oh no!/);
+		});
+
+		it("works when observable does not error", async () => {
+			await expect(from([])).not.toErrorWith(/oh no!/);
+		});
+
+		it("works when observable errors with a mismatch", async () => {
+			await expect(throwError(() => new Error("oh no!"))).not.toErrorWith(/whoops!/);
+		});
+	});
+
 	// eslint-disable-next-line jest/no-disabled-tests
 	describe.skip("failing examples for docs", () => {
 		it("shows emitted values", async () => {
@@ -72,6 +86,18 @@ describe("extending Jest", () => {
 
 		it("reports expected errors not received", async () => {
 			await expect(from([])).toError();
+		});
+
+		it("reports matching errors not received", async () => {
+			await expect(from([])).toErrorWith(/whoops/);
+		});
+
+		it("reports mismatched errors received", async () => {
+			await expect(throwError(() => new Error("oh no!"))).toErrorWith(/whoops/);
+		});
+
+		it("reports matched errors unexpectedly received", async () => {
+			await expect(throwError(() => new Error("oh no!"))).not.toErrorWith(/oh no/);
 		});
 	});
 });

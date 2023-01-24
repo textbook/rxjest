@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
 import type { Config } from "./config";
-import { after } from "./utils";
+import { errorIfThrown } from "./utils";
 
 export async function toError<T>(
 	this: jest.MatcherUtils,
@@ -24,20 +24,4 @@ export async function toError<T>(
 			+ (pass ? `Expected value: not ${this.utils.printReceived(error)}\n` : withoutError),
 		pass,
 	};
-}
-
-function errorIfThrown<T>(received$: Observable<T>, within?: number): Promise<unknown | null> {
-	const thrown = new Promise((resolve) => {
-		received$.subscribe({
-			complete() {
-				resolve(null);
-			},
-			error(err) {
-				resolve(err);
-			},
-		});
-	});
-	return within === undefined
-		? thrown
-		: Promise.race([thrown, after(within, null)]);
 }
