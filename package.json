@@ -1,6 +1,6 @@
 {
   "name": "rxjest",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Jest matchers for working with RxJS observables",
   "homepage": "https://github.com/textbook/rxjest#readme",
   "bugs": {
