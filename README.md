@@ -1,6 +1,6 @@
 # RxJeSt
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/textbook/rxjest/push.yml?branch=main&logo=github)](https://github.com/textbook/rxjest/actions/workflows/push.yml)
+[![Node.js CI](https://github.com/textbook/rxjest/actions/workflows/push.yml/badge.svg)](https://github.com/textbook/rxjest/actions/workflows/push.yml)
 [![NPM](https://img.shields.io/npm/v/rxjest?color=blue&logo=npm)](https://www.npmjs.com/package/rxjest)
 
 [Jest] matchers for working with [RxJS] observables.
@@ -181,6 +181,7 @@ it("asserts that the observable errors", async () => {
 ```
 
 **Note** that this is an asynchronous matcher that needs to be `await`ed or `return`ed.
+
 This matcher has the following failure cases:
 
 - If the observable completes without an error, that is shown explicitly:
@@ -205,7 +206,7 @@ This matcher has the following failure cases:
           at Object.<anonymous> (src/index.test.ts:92:27)
     ```
 
-  - If an unexpected error is thrown, it is shown in the output:
+- If an unexpected error is thrown, it is shown in the output:
 
     ```none
       ● extending Jest › failing examples for docs › reports mismatched errors received
@@ -226,7 +227,7 @@ This matcher has the following failure cases:
           at Object.<anonymous> (src/index.test.ts:96:56)
     ```
 
-  - If an unexpected match is received it is shown:
+- If an unexpected match is received it is shown:
 
     ```none
       ● extending Jest › failing examples for docs › reports matched errors unexpectedly received
@@ -267,8 +268,9 @@ to understand that the matchers are asynchronous as follows:
       "error",
       {
         "asyncMatchers": [
+          "toEmit",
           "toError",
-          "toEmit"
+          "toErrorWith"
         ]
       }
     ]
