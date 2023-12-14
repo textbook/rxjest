@@ -51,6 +51,9 @@ jobs:
           - jest: 29
             node: 20
             rxjs: 7
+          - jest: 27.0
+            node: 16.0
+            rxjs: 6.0
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

@@ -29,7 +29,7 @@ fi
 pushd "$TEST_DIR"
 	npm init -y
 	npm install "rxjs@$RXJS_VERSION"
-	npm install --save-dev {@types/,ts-,}"jest@$JEST_VERSION" typescript
+	npm install --save-dev --save-exact {@types/,ts-,}"jest@$JEST_VERSION" typescript
 	npx tsc --init
 
 	npm pkg set scripts.test='jest --preset ts-jest'
