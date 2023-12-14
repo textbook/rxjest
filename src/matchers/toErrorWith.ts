@@ -21,7 +21,7 @@ export async function toErrorWith<T>(
 	};
 }
 
-const getMessage = (error: unknown | null): string | undefined => {
+const getMessage = (error: unknown): string | undefined => {
 	if (
 		typeof error === "object"
 		&& error !== null
